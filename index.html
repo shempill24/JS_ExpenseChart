@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Frontend Mentor | Expenses chart component</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="flex_row salmon">
+      <div class="flex_column">
+        <h1 class="balance_copy">My balance</h1>
+        <h2 class="balance">  $921.48</h2>
+      </div>  
+      <div class="logo"><img src="./images/logo.svg" alt="double circle logo black and white"></div>
+    </div>
+  </header>
+  <div class="white_background">
+    <h1 class="spending">  Spending - Last 7 days</h1>
+    <div class="grid_chart">
+      <div class="bar_void"><div class="mon hovVal display_none"></div>
+        <div class="bar" id="mon"></div>
+      </div>
+      
+      <div class="bar_void"><div class="tue hovVal display_none"></div>
+        <div class="bar" id="tue"></div>
+      </div>
+  
+      <div class="bar_void"><div class="wed hovVal display_none"></div>
+        <div class="bar" id="wed"></div>
+      </div>
+     
+      <div class="bar_void"><div class="thu hovVal display_none"></div>
+        <div class="bar"id='thu'></div>
+      </div>
+      
+      <div class="bar_void"><div class="fri hovVal display_none"></div>
+        <div class="bar"id='fri'></div>
+      </div>
+      
+      <div class="bar_void"><div class="sat hovVal display_none"></div>
+        <div class="bar" id='sat'></div>
+      </div>
+     
+      <div class="bar_void"><div class="sun hovVal display_none"></div>
+        <div class="bar"id='sun'></div>
+      </div>
+      <div class="day">mon</div>
+      <div class="day">tue</div>
+      <div class="day">wed</div>
+      <div class="day">thu</div>
+      <div class="day">fri</div>
+      <div class="day">sat</div>
+      <div class="day">sun</div>
+    </div>
+    <div class="flex_row">
+      <div class="flex_column">
+        <h1 class="total_copy">Total this month</h1>
+        <h2 class="total">$478.33</h2>
+      </div>
+      <div class="flex_column">
+        <h2 class="diff_perc">+2.4%</h2>  
+        <h2 class="diff_copy">from last month</h2>
+      </div>
+    </div>
+  </div>
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">sbarettino</a>.
+  </div>
+</main>
+<script>
+var my_json;
+let total = 0;
+let dayPerc = 0;
+let dayTots = [];
+
+
+
+  $.getJSON("data.json", function(json){
+    my_json = json;
+
+    $.each(my_json, function(key, value){
+      total += value.amount;
+      if(dayTots.length != 0){
+        if(dayTots[0].amount < value.amount){
+          dayTots[0] = value
+        
+        }
+      }else{
+        dayTots.push(value)
+
+      }
+     
+      console.log(dayTots[0].day)
+
+      
+      });
+      $(`#${dayTots[0].day}`).addClass("highest_bar")
+    $.each(my_json, function(key,value){
+      dayPerc = Math.floor((this.amount/total)*300)
+      $(`#${this.day}`).css("height", `${dayPerc}%`)
+      $(`.${this.day}`).text(`\$${this.amount}`)
+    });
+  });
+  console.log(dayTots.sort())
+  $(".bar").hover(function(){
+  
+  })
+
+
+</script>
+</body>
+</html>
