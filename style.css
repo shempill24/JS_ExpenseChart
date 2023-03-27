@@ -29,7 +29,7 @@ main{
 }
 header{
     width: 50%;
-    max-width: 700px;
+    max-width: 500px;
 }
 .flex_row{
     display: flex;
@@ -132,10 +132,14 @@ header{
 .display_none{
     display:none;
 }
-.display_none:hover{
-    display: unset;
-   ;
+.flex_end{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+
 }
+
 @media only screen and (max-width:800px) {
     header{
         width: 90%;

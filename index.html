@@ -29,31 +29,31 @@
     <h1 class="spending">  Spending - Last 7 days</h1>
     <div class="grid_chart">
       <div class="bar_void"><div class="mon hovVal display_none"></div>
-        <div class="bar" id="mon"></div>
+        <div class="bar" id="mon" value="mon"></div>
       </div>
       
       <div class="bar_void"><div class="tue hovVal display_none"></div>
-        <div class="bar" id="tue"></div>
+        <div class="bar" id="tue" value="tue"></div>
       </div>
   
       <div class="bar_void"><div class="wed hovVal display_none"></div>
-        <div class="bar" id="wed"></div>
+        <div class="bar" id="wed" value="wed"></div>
       </div>
      
       <div class="bar_void"><div class="thu hovVal display_none"></div>
-        <div class="bar"id='thu'></div>
+        <div class="bar"id='thu' value="thu"></div>
       </div>
       
       <div class="bar_void"><div class="fri hovVal display_none"></div>
-        <div class="bar"id='fri'></div>
+        <div class="bar"id='fri' value="fri"></div>
       </div>
       
       <div class="bar_void"><div class="sat hovVal display_none"></div>
-        <div class="bar" id='sat'></div>
+        <div class="bar" id='sat' value="sat"></div>
       </div>
      
       <div class="bar_void"><div class="sun hovVal display_none"></div>
-        <div class="bar"id='sun'></div>
+        <div class="bar"id='sun' value="sun"></div>
       </div>
       <div class="day">mon</div>
       <div class="day">tue</div>
@@ -68,7 +68,7 @@
         <h1 class="total_copy">Total this month</h1>
         <h2 class="total">$478.33</h2>
       </div>
-      <div class="flex_column">
+      <div class="flex_column flex_end">
         <h2 class="diff_perc">+2.4%</h2>  
         <h2 class="diff_copy">from last month</h2>
       </div>
@@ -84,6 +84,7 @@ var my_json;
 let total = 0;
 let dayPerc = 0;
 let dayTots = [];
+let show =''
 
 
 
@@ -94,29 +95,29 @@ let dayTots = [];
       total += value.amount;
       if(dayTots.length != 0){
         if(dayTots[0].amount < value.amount){
-          dayTots[0] = value
-        
+          dayTots[0] = value;
         }
       }else{
         dayTots.push(value)
+      };
+     });
 
-      }
-     
-      console.log(dayTots[0].day)
+    $(`#${dayTots[0].day}`).addClass("highest_bar");
 
-      
-      });
-      $(`#${dayTots[0].day}`).addClass("highest_bar")
     $.each(my_json, function(key,value){
       dayPerc = Math.floor((this.amount/total)*300)
       $(`#${this.day}`).css("height", `${dayPerc}%`)
       $(`.${this.day}`).text(`\$${this.amount}`)
     });
   });
-  console.log(dayTots.sort())
+
   $(".bar").hover(function(){
-  
-  })
+    show = $(this).attr("id");
+  $(`.${show}`).removeClass('display_none');
+  }, function(){
+    $(`.${show}`).addClass('display_none');
+  }
+  )
 
 
 </script>
